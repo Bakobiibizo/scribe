@@ -13,12 +13,10 @@ for file in os.listdir(in_dir):
     if file.endswith((".mp4", ".mkv")):
         file.replace(".mp4", "").split(".", -1)[0]
         print(file)
-    with SoundFile(os.path.join(in_dir, file), 'r') as audio_file:
-        video = audio_file.read(dtype='float32')
-        print(video)
-        audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
-        print(audio_file_name)
-        video.file.write_audiofile(audio_file_name, codec='pcm_s16le')
+    video = AudioFileClip(os.path.join(in_dir, file))
+    audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
+    print(audio_file_name)
+    video.audio.write_audiofile(os.path.join(out_dir, audio_file_name), codec='pcm_s16le')
 for file in os.listdir(in_dir):
     full_audio_path = os.path.join(in_dir, file)
     if file.endswith((".mkv", ".mp4")):
