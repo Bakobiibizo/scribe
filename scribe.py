@@ -10,7 +10,7 @@ out_dir = "out"
 filename = "TheUniverse.mp4"
 for file in os.listdir(in_dir):
     print(file)
-    if file.endswith(".mp4" or ".mkv"):
+    if file.endswith((".mp4", ".mkv")):
         file.replace(".mp4", "").split(".", -1)[0]
         print(file)
         video = SoundFile.buffer_read(os.path.join(in_dir, file), dtype='float32')
@@ -20,7 +20,7 @@ for file in os.listdir(in_dir):
         video.file.write_audiofile(audio_file_name, codec='pcm_s16le')
 for file in os.listdir(in_dir):
     full_audio_path = os.path.join(in_dir, file)
-    if file.endswith(".mkv" or "mp4"):
+    if file.endswith((".mkv", ".mp4")):
         video = AudioFileClip(full_audio_path)
         audio_file_name = f"{full_audio_path.rsplit('.', 1)[0]}.mp3"
         video.audio.write_audiofile(audio_file_name, codec='pcm_s16le')
