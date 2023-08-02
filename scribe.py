@@ -20,7 +20,7 @@ for file in os.listdir(in_dir):
 # Removed the audio_file_name = None line
 if audio_file_name is not None:
     if os.path.getsize(os.path.join(out_dir, audio_file_name)) > 26214400:
-        audio = AudioSegment.from_mp3(audio_file_name)
+        audio = AudioSegment.from_mp3(os.path.join(out_dir, audio_file_name))
         audio = audio.set_frame_rate(16000)
         audio.export(audio_file_name, format="mp3")
 
