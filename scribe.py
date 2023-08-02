@@ -16,7 +16,7 @@ for file in os.listdir(in_dir):
     video = AudioFileClip(os.path.join(in_dir, file))
     audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
     print(audio_file_name)
-    video.write_audiofile(os.path.join(out_dir, audio_file_name), codec='pcm_s16le')
+    video.write_audiofile(os.path.join(out_dir, audio_file_name))
 for file in os.listdir(in_dir):
     full_audio_path = os.path.join(in_dir, file)
     if file.endswith((".mkv", ".mp4")):
