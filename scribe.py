@@ -17,7 +17,7 @@ for file in os.listdir(in_dir):
     audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
     print(audio_file_name)
     video.write_audiofile(os.path.join(out_dir, audio_file_name))
-audio_file_name = None
+# Removed the audio_file_name = None line
 if audio_file_name is not None:
     if os.path.getsize(audio_file_name) > 26214400:
         audio = AudioSegment.from_mp3(audio_file_name)
