@@ -5,15 +5,15 @@ from pydub import AudioSegment
 
 
 video_dir = "video"
-file_name = "video/TheUniverse.mp4"
+file_name = "TheUniverse.mp4"
 audio_file_name = f"{file_name.rsplit('.', 1)[0]}.mp3"
 audio_file_path = os.path.join(video_dir, audio_file_name)
 
 for file in os.listdir(video_dir):
     file_path = os.path.join(video_dir, file)
     if file.endswith(".mkv" or "mp4"):
-        video = AudioFileClip(file_name)
-        audio_file_name = "video/TheUniverse.mp3"
+        video = AudioFileClip(file_path)
+        audio_file_name = f"{file_path.rsplit('.', 1)[0]}.mp3"
         video.write_audiofile(audio_file_name)
     else:
         audio_file_name = file_path
@@ -121,7 +121,7 @@ def save_as_file(minutes, filename):
             file.write(f'{value}\n\n')
             
     
-audio_file_name = f"{file_name}.mp3"
+
 transcription = transcribe_audio(audio_file_name)
 minutes = meeting_minutes(transcription)
 print(minutes)
