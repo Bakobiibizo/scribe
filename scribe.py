@@ -5,7 +5,7 @@ from pydub import AudioSegment
 
 
 video_dir = "video"
-file_name = "TheUniverseYourAuton.mp4"
+file_name = "TheUniverse.mp4"
 audio_file_name = f"{file_name.rsplit('.', 1)[0]}.mp3"
 audio_file_path = os.path.join(video_dir, audio_file_name)
 
