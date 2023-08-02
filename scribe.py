@@ -13,7 +13,8 @@ for file in os.listdir(in_dir):
     if file.endswith((".mp4", ".mkv")):
         file.replace(".mp4", "").split(".", -1)[0]
         print(file)
-        video = SoundFile.buffer_read(os.path.join(in_dir, file), dtype='float32')
+        with SoundFile(os.path.join(in_dir, file), 'r') as audio_file:
+        video = audio_file.read(dtype='float32')
         print(video)
         audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
         print(audio_file_name)
