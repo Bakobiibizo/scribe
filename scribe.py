@@ -17,6 +17,7 @@ for file in os.listdir(in_dir):
     audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
     print(audio_file_name)
     video.write_audiofile(os.path.join(out_dir, audio_file_name))
+audio_file_name = None
 for file in os.listdir(in_dir):
     full_audio_path = os.path.join(in_dir, file)
     if file.endswith((".mkv", ".mp4")):
@@ -26,11 +27,12 @@ for file in os.listdir(in_dir):
     else:
         audio_file_name = full_audio_path
 
-audio_chunks = []
-if os.path.getsize(audio_file_name) > 26214400:
-    audio = AudioSegment.from_mp3(audio_file_name)
-    audio = audio.set_frame_rate(16000)
-    audio.export(audio_file_name, format="mp3")
+if audio_file_name is not None:
+    audio_chunks = []
+    if os.path.getsize(audio_file_name) > 26214400:
+        audio = AudioSegment.from_mp3(audio_file_name)
+        audio = audio.set_frame_rate(16000)
+        audio.export(audio_file_name, format="mp3")
 
 
 def transcribe_audio(audio_file_name):
