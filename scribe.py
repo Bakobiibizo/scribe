@@ -26,9 +26,13 @@ if os.path.getsize(audio_file_name) > 26214400:
 
 
 def transcribe_audio(audio_file_name):
-    with open(audio_file_name, 'rb') as audio_file:
-        transcription = openai.Audio.transcribe("whisper-1", audio_file)
-    return transcription['text']
+    try:
+        with open(audio_file_name, 'rb') as audio_file:
+            transcription = openai.Audio.transcribe("whisper-1", audio_file)
+        return transcription['text']
+    except FileNotFoundError:
+        print(f"File {audio_file_name} not found.")
+        return None
 
 def meeting_minutes(transcription):
     abstract_summary = abstract_summary_extraction(transcription)
@@ -123,7 +127,10 @@ def save_as_file(minutes, filename):
     
 
 transcription = transcribe_audio(audio_file_name)
-minutes = meeting_minutes(transcription)
-print(minutes)
+if transcription:
+    minutes = meeting_minutes(transcription)
+    print(minutes)
+else:
+    print("No transcription available.")
 
 save_as_file(minutes, f'{file_name}.txt')
