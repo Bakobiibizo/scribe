@@ -2,28 +2,31 @@ import openai
 import os
 from moviepy.editor import AudioFileClip
 from pydub import AudioSegment
-from soundfile import SoundFile
+import datetime
 
 
 in_dir = "in"
 out_dir = "out"
-# Removed the filename variable
 video = None
+
 for file in os.listdir(in_dir):
-    print(file)
+
     if file.endswith((".mp4", ".mkv")):
-        print(file)
-    video = AudioFileClip(os.path.join(in_dir, file))
-    audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
-    print(audio_file_name)
-    video.write_audiofile(os.path.join(out_dir, audio_file_name))
-# Removed the audio_file_name = None line
+
+        video = AudioFileClip(os.path.join(in_dir, file))
+        audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
+        print(audio_file_name)
+        video.write_audiofile(os.path.join(out_dir, audio_file_name))
+    
+    if file.endswith((".mp3")):
+        audio_file_name  = f"{file.rsplit('.', 1)[0]}.mp3"
+        print(audio_file_name)
+
 if audio_file_name is not None:
     if os.path.getsize(os.path.join(out_dir, audio_file_name)) > 26214400:
         audio = AudioSegment.from_mp3(os.path.join(out_dir, audio_file_name))
         audio = audio.set_frame_rate(16000)
         audio.export(audio_file_name, format="mp3")
-
 
 def transcribe_audio(audio_file_name):
     try:
@@ -40,12 +43,13 @@ def meeting_minutes(transcription):
     action_items = action_item_extraction(transcription)
     sentiment = sentiment_analysis(transcription)
     return {
+        'filename': audio_file_name,
+        'datetime': datetime.datetime.now().isoformat(timespec="seconds"),
         'abstract_summary': abstract_summary,
         'key_points': key_points,
         'action_items': action_items,
         'sentiment': sentiment
     }
-
 
 def key_points_extraction(transcription):
     response = openai.ChatCompletion.create(
@@ -118,11 +122,9 @@ def sentiment_analysis(transcription):
     return response['choices'][0]['message']['content']
 
 def save_as_file(minutes):
-    with open('meeting_minutes.txt', 'w') as f:
+    with open('out/meeting_minutes.txt', 'w') as f:
         f.write(str(minutes))
             
-    
-
 transcription = None
 transcription = transcribe_audio(audio_file_name)
 minutes = None
