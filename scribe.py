@@ -141,6 +141,7 @@ def save_as_file(minutes, filename):
 
 transcription = None
 transcription = transcribe_audio(audio_file_name)
+minutes = None
 if transcription:
     minutes = meeting_minutes(transcription)
     print(minutes)
