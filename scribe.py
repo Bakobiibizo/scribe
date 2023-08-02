@@ -7,29 +7,20 @@ from soundfile import SoundFile
 
 in_dir = "in"
 out_dir = "out"
-filename = "TheUniverse.mp4"
+# Removed the filename variable
 video = None
 for file in os.listdir(in_dir):
     print(file)
     if file.endswith((".mp4", ".mkv")):
-        file.replace(".mp4", "").split(".", -1)[0]
         print(file)
     video = AudioFileClip(os.path.join(in_dir, file))
     audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
     print(audio_file_name)
     video.write_audiofile(os.path.join(out_dir, audio_file_name))
 audio_file_name = None
-for file in os.listdir(in_dir):
-    full_audio_path = os.path.join(in_dir, file)
-    if file.endswith((".mkv", ".mp4")):
-        video = AudioFileClip(full_audio_path)
-        audio_file_name = f"{full_audio_path.rsplit('.', 1)[0]}.mp3"
-        if video is not None:
-            video.write_audiofile(audio_file_name, codec='pcm_s16le')
-    else:
-        audio_file_name = full_audio_path
+# Removed the second loop
 
-audio = None
+# Removed the audio variable
 if audio_file_name is not None:
     if os.path.getsize(audio_file_name) > 26214400:
         audio = AudioSegment.from_mp3(audio_file_name)
@@ -129,12 +120,7 @@ def sentiment_analysis(transcription):
     )
     return response['choices'][0]['message']['content']
 
-def save_as_file(minutes, filename):
-    with open(filename, 'a',encoding='utf-8') as file:
-        for key, value in minutes.items():
-            heading = ' '.join(word.capitalize() for word in key.split('_'))
-            file.write(f'{key.upper()}\n')
-            file.write(f'{value}\n\n')
+# Removed the save_as_file function
             
     
 
