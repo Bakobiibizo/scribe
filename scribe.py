@@ -14,7 +14,7 @@ for file in os.listdir(video_dir):
     if file.endswith(".mkv" or "mp4"):
         video = AudioFileClip(file_path)
         audio_file_name = f"{file_path.rsplit('.', 1)[0]}.mp3"
-        video.write_audiofile(audio_file_name)
+        video.audio.write_audiofile(audio_file_name, codec='pcm_s16le')
     else:
         audio_file_name = file_path
 
