@@ -117,7 +117,9 @@ def sentiment_analysis(transcription):
     )
     return response['choices'][0]['message']['content']
 
-# Removed the save_as_file function
+def save_as_file(minutes):
+    with open('meeting_minutes.txt', 'w') as f:
+        f.write(str(minutes))
             
     
 
@@ -127,6 +129,7 @@ minutes = None
 if transcription:
     minutes = meeting_minutes(transcription)
     print(minutes)
+    save_as_file(minutes)
 else:
     print("No transcription available.")
 
