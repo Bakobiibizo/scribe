@@ -31,7 +31,6 @@ for file in os.listdir(in_dir):
 
 audio = None
 if audio_file_name is not None:
-    audio_chunks = []
     if os.path.getsize(audio_file_name) > 26214400:
         audio = AudioSegment.from_mp3(audio_file_name)
         audio = audio.set_frame_rate(16000)
