@@ -2,21 +2,30 @@ import openai
 import os
 from moviepy.editor import AudioFileClip
 from pydub import AudioSegment
+from soundfile import SoundFile
 
 
-video_dir = r"video"
-file_name = "TheUniverse.mp4"
-audio_file_name = f"{file_name.rsplit('.', 1)[0]}.mp3"
-audio_file_path = os.path.join(video_dir, audio_file_name)
-
-for file in os.listdir(video_dir):
-    file_path = os.path.join(video_dir, file)
+in_dir = "in"
+out_dir = "out"
+filename = "TheUniverse.mp4"
+for file in os.listdir(in_dir):
+    print(file)
+    if file.endswith(".mp4" or ".mkv"):
+        file.replace(".mp4", "").split(".", -1)[0]
+        print(file)
+        video = SoundFile.buffer_read(os.path.join(in_dir, file), dtype='float32')
+        print(video)
+        audio_file_name = f"{file.rsplit('.', 1)[0]}.mp3"
+        print(audio_file_name)
+        video.file.write_audiofile(audio_file_name, codec='pcm_s16le')
+for file in os.listdir(in_dir):
+    full_audio_path = os.path.join(in_dir, file)
     if file.endswith(".mkv" or "mp4"):
-        video = AudioFileClip(file_path)
-        audio_file_name = f"{file_path.rsplit('.', 1)[0]}.mp3"
+        video = AudioFileClip(full_audio_path)
+        audio_file_name = f"{full_audio_path.rsplit('.', 1)[0]}.mp3"
         video.audio.write_audiofile(audio_file_name, codec='pcm_s16le')
     else:
-        audio_file_name = file_path
+        audio_file_name = full_audio_path
 
 audio_chunks = []
 if os.path.getsize(audio_file_name) > 26214400:
@@ -133,4 +142,3 @@ if transcription:
 else:
     print("No transcription available.")
 
-save_as_file(minutes, f'{file_name}.txt')
