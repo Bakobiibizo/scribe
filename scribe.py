@@ -29,6 +29,7 @@ for file in os.listdir(in_dir):
     else:
         audio_file_name = full_audio_path
 
+audio = None
 if audio_file_name is not None:
     audio_chunks = []
     if os.path.getsize(audio_file_name) > 26214400:
