@@ -1,0 +1,12 @@
+
+__pycache__
+
+.aider
+**/*.env
+**/*.mp3
+**/*.wav
+**/*.mp4
+**/*.mkv
+**/*.json
+out/*.txt
+in/*.txt
