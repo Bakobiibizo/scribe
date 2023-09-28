@@ -155,9 +155,8 @@ def scriber():
             video = AudioFileClip(os.path.join(in_dir, file))
             audio_file_path = os.path.join(in_dir, f"{os.path.splitext(file)[0]}.mp3")
             video.write_audiofile(audio_file_path)
-        else:
-            if any(file.endswith(suffix) for suffix in audio_suffix):
-                audio_file_path = os.path.join(in_dir, file)
+        elif any(file.endswith(suffix) for suffix in audio_suffix):
+            audio_file_path = os.path.join(in_dir, file)
 
         if audio_file_path:
             segments = segment_audio()
@@ -197,9 +196,7 @@ def segment_audio():
     detected_silence = silence.detect_nonsilent(
         audio, min_silence_len=500, silence_thresh=-32
     )
-    segments = [audio[start:end] for start, end in detected_silence]
-
-    return segments
+    return [audio[start:end] for start, end in detected_silence]
 
 
 def pretty_minutes():
@@ -229,11 +226,9 @@ def save_as_file(minutes):
     Returns:
     - None
     """
-    human_readable_text = ""
-
-    for key, value in minutes.items():
-        human_readable_text += f"{key}: {value}\n"
-
+    human_readable_text = "".join(
+        f"{key}: {value}\n" for key, value in minutes.items()
+    )
     with open("out/minutes.txt", "w") as file:
         file.write(human_readable_text)
 
